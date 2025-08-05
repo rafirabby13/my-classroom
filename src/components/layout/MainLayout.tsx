@@ -9,6 +9,7 @@ import type { ClassData } from '../classroom/ClassCard';
 import type { PostData } from '../posts/PostCard';
 import ClassInterface from '../classroom/ClassInterface';
 import ClassList from '../classroom/ClassList';
+import { Button } from '../ui/button';
 
 // Mock data - replace with your actual data
 const mockClasses: ClassData[] = [
@@ -166,18 +167,18 @@ const MainLayout: React.FC = () => {
               <h1 className="text-2xl font-semibold text-gray-900">My Classes</h1>
             </div>
             <div className="flex space-x-3">
-              <button 
+              <Button 
                 onClick={handleJoinClass}
-                className="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-700"
+                className="bg-amber-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700"
               >
                 Join Class
-              </button>
-              <button 
+              </Button>
+              <Button 
                 onClick={handleCreateClass}
-                className="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-700"
+                className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-gray-700"
               >
                 Create Class
-              </button>
+              </Button>
             </div>
           </div>
         </header>

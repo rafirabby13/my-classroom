@@ -25,8 +25,8 @@ const ClassCard: React.FC<ClassCardProps> = ({ classData, onClick }) => {
         <h3 className="text-xl font-semibold mb-1">{classData.name}</h3>
         <p className="text-sm opacity-90">{classData.teacher}</p>
       </div>
-      <div className="bg-white bg-opacity-10 p-3 rounded mb-3">
-        <p className="text-sm">{classData.description}</p>
+      <div className=" bg-opacity-10 p-2 bg-[#fafbfb33] rounded mb-3">
+        <p className="text-sm ">{classData.description}</p>
       </div>
       <div className="flex justify-between items-center text-sm">
         <span>Code: {classData.code}</span>
