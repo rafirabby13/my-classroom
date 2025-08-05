@@ -128,25 +128,25 @@ const MainLayout: React.FC = () => {
   // If a class is selected, show the class interface
   if (selectedClass) {
     return (
-      <ClassInterface 
-        classData={selectedClass} 
+      <ClassInterface
+        classData={selectedClass}
         posts={mockPosts}
-        onBack={handleBackToClasses} 
+        onBack={handleBackToClasses}
       />
     );
   }
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Sidebar 
-        isOpen={sidebarOpen} 
+      <Sidebar
+        isOpen={sidebarOpen}
         currentView={currentView}
         onViewChange={handleViewChange}
       />
-      
+
       {/* Overlay for mobile */}
       {sidebarOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black bg-opacity-50 z-10 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
@@ -167,13 +167,13 @@ const MainLayout: React.FC = () => {
               <h1 className="text-2xl font-semibold text-gray-900">My Classes</h1>
             </div>
             <div className="flex space-x-3">
-              <Button 
+              <Button
                 onClick={handleJoinClass}
                 className="bg-amber-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700"
               >
                 Join Class
               </Button>
-              <Button 
+              <Button
                 onClick={handleCreateClass}
                 className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-gray-700"
               >
@@ -186,7 +186,7 @@ const MainLayout: React.FC = () => {
         {/* Content Area */}
         <main className="p-6">
           {currentView === 'home' && (
-            <ClassList 
+            <ClassList
               classes={mockClasses}
               onClassClick={handleClassClick}
             />

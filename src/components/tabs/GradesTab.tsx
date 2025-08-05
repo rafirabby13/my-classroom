@@ -4,7 +4,7 @@ interface GradesTabProps {
   onCreateAssignment?: () => void;
 }
 
-const GradesTab: React.FC<GradesTabProps> = ({ onCreateAssignment }) => {
+const GradesTab: React.FC<GradesTabProps> = () => {
   return (
     <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
       <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
