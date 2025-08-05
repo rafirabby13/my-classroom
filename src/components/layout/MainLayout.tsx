@@ -164,7 +164,10 @@ const MainLayout: React.FC = () => {
               >
                 <Menu className="w-6 h-6" />
               </button>
-              <h1 className="text-2xl font-semibold text-gray-900">My Classes</h1>
+              <div className='md:flex items-center gap-2 hidden'>
+                <img className='h-7 w-7' src="/public/logo.png" alt="" />
+                <h1 className="text-2xl font-semibold text-gray-900">My Classroom</h1>
+              </div>
             </div>
             <div className="flex space-x-3">
               <Button
