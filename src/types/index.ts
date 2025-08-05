@@ -39,3 +39,49 @@ export interface Comment {
   content: string;
   createdAt: Date;
 }
+// types/index.ts
+
+export interface ClassData {
+  id: number;
+  name: string;
+  teacher: string;
+  description: string;
+  code: string;
+  students: number;
+  color: string;
+}
+
+export interface PostData {
+  id: number;
+  type: 'assignment' | 'material' | 'announcement';
+  title: string;
+  description: string;
+  dueDate?: string;
+  author: string;
+  timestamp: string;
+}
+
+export interface StudentData {
+  id: number;
+  name: string;
+  email: string;
+}
+
+export interface AssignmentData {
+  id: number;
+  title: string;
+  description: string;
+  dueDate: string;
+  points: number;
+  classId: number;
+  submissions?: SubmissionData[];
+}
+
+export interface SubmissionData {
+  id: number;
+  studentId: number;
+  assignmentId: number;
+  submittedAt: string;
+  grade?: number;
+  feedback?: string;
+}

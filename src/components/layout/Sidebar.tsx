@@ -1,56 +1,46 @@
 import React from 'react';
-import useAuthContext from '../../hooks/useAuthContext'; // Using your hook
-import { Link, useLocation } from 'react-router';
+import { Home, Calendar, BookOpen, Settings } from 'lucide-react';
 
-export const Sidebar: React.FC = () => {
-  const { getUserClasses } = useAuthContext(); // Using your custom hook
-  const location = useLocation();
-  const userClasses = getUserClasses();
+interface SidebarProps {
+  isOpen: boolean;
+  currentView: string;
+  onViewChange: (view: string) => void;
+}
 
-  const isActive = (path: string) => location.pathname === path;
+const Sidebar: React.FC<SidebarProps> = ({ isOpen, currentView, onViewChange }) => {
+  const menuItems = [
+    { id: 'home', icon: Home, label: 'Classes', active: currentView === 'home' },
+    { id: 'calendar', icon: Calendar, label: 'Calendar', active: currentView === 'calendar' },
+    { id: 'assignments', icon: BookOpen, label: 'To Review', active: currentView === 'assignments' },
+  ];
 
   return (
-    <aside className="w-64 bg-gray-50 min-h-screen border-r">
-      <nav className="mt-5 px-2">
-        <div className="space-y-1">
-          <Link
-            to="/"
-            className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md ${
-              isActive('/') 
-                ? 'bg-blue-100 text-blue-900' 
-                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+    <div className={`fixed left-0 top-0 h-full bg-white border-r border-gray-200 transition-transform duration-300 z-20 ${isOpen ? 'translate-x-0' : '-translate-x-full'} w-64`}>
+      <div className="p-4 border-b border-gray-200">
+        <h2 className="text-xl font-semibold text-gray-800">Classroom</h2>
+      </div>
+      <nav className="p-2">
+        {menuItems.map((item) => (
+          <button
+            key={item.id}
+            onClick={() => onViewChange(item.id)}
+            className={`w-full flex items-center px-3 py-3 rounded-lg text-left hover:bg-gray-100 transition-colors ${
+              item.active ? 'bg-blue-50 text-blue-600 border-r-3 border-blue-600' : 'text-gray-700'
             }`}
           >
-            <span className="mr-3">🏠</span>
-            Dashboard
-          </Link>
-        </div>
-        
-        <div className="mt-8">
-          <h3 className="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-            My Classes
-          </h3>
-          <div className="mt-2 space-y-1">
-            {userClasses.map(classRoom => (
-              <Link
-                key={classRoom.id}
-                to={`/class/${classRoom.id}`}
-                className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md ${
-                  isActive(`/class/${classRoom.id}`)
-                    ? 'bg-blue-100 text-blue-900'
-                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                }`}
-              >
-                <div 
-                  className="w-3 h-3 rounded-full mr-3"
-                  style={{ backgroundColor: classRoom.color }}
-                ></div>
-                <span className="truncate">{classRoom.name}</span>
-              </Link>
-            ))}
-          </div>
-        </div>
+            <item.icon className="w-5 h-5 mr-3" />
+            {item.label}
+          </button>
+        ))}
       </nav>
-    </aside>
+      <div className="absolute bottom-4 left-4 right-4">
+        <button className="w-full flex items-center px-3 py-3 rounded-lg text-left hover:bg-gray-100 transition-colors text-gray-700">
+          <Settings className="w-5 h-5 mr-3" />
+          Settings
+        </button>
+      </div>
+    </div>
   );
 };
+
+export default Sidebar;

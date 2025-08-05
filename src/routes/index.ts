@@ -1,11 +1,11 @@
 import { createBrowserRouter } from "react-router";
 
 import React from "react";
-import { Dashboard } from "../pages/Dahsboard";
+import MainLayout from "@/components/layout/MainLayout";
 
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: React.createElement(Dashboard)
+        element: React.createElement(MainLayout)
     }
 ])
