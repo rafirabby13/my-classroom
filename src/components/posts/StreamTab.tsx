@@ -4,7 +4,7 @@ import type { PostData } from './PostCard';
 import PostCard from './PostCard';
 
 interface StreamTabProps {
-  posts: PostData[];
+  // posts: PostData[];
   onCreateAssignment?: () => void;
   onCreateMaterial?: () => void;
   onCreateAnnouncement?: () => void;
@@ -12,7 +12,7 @@ interface StreamTabProps {
 }
 
 const StreamTab: React.FC<StreamTabProps> = ({ 
-  posts, 
+  // posts, 
   onCreateAssignment, 
   onCreateMaterial, 
   onCreateAnnouncement,
@@ -26,7 +26,7 @@ const StreamTab: React.FC<StreamTabProps> = ({
         onCreateAnnouncement={onCreateAnnouncement}
       />
       
-      <div>
+      {/* <div>
         {posts.map((post) => (
           <PostCard 
             key={post.id} 
@@ -34,7 +34,7 @@ const StreamTab: React.FC<StreamTabProps> = ({
             onMenuClick={onPostMenuClick}
           />
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -1,25 +1,16 @@
-import React, { useState } from 'react';
-import type { ClassData } from './ClassCard';
-import type { PostData } from '../posts/PostCard';
+import { useState } from 'react';
 import StreamTab from '../posts/StreamTab';
 import ClassworkTab from '../tabs/ClassworkTab';
 import PeopleTab from '../tabs/PeopleTab';
 import GradesTab from '../tabs/GradesTab';
+import { useLoaderData } from 'react-router';
 import ClassHeader from './ClassHeader';
 
-interface ClassInterfaceProps {
-  classData: ClassData;
-  posts?: PostData[];
-  onBack: () => void;
-}
 
-const ClassInterface: React.FC<ClassInterfaceProps> = ({ 
-  classData, 
-  posts = [], 
-  onBack 
-}) => {
+
+const ClassInterface = () => {
   const [activeTab, setActiveTab] = useState('stream');
-
+  const classData = useLoaderData();
   const handleCreateAssignment = () => {
     console.log('Create assignment clicked');
     // Add your create assignment logic here
@@ -44,8 +35,8 @@ const ClassInterface: React.FC<ClassInterfaceProps> = ({
     switch (activeTab) {
       case 'stream':
         return (
-          <StreamTab 
-            posts={posts}
+          <StreamTab
+            // posts={posts}
             onCreateAssignment={handleCreateAssignment}
             onCreateMaterial={handleCreateMaterial}
             onCreateAnnouncement={handleCreateAnnouncement}
@@ -65,13 +56,13 @@ const ClassInterface: React.FC<ClassInterfaceProps> = ({
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <ClassHeader 
+      <ClassHeader
         classData={classData}
         activeTab={activeTab}
-        onBack={onBack}
+        // onBack={onBack}
         onTabChange={setActiveTab}
       />
-      
+
       <div className="max-w-4xl mx-auto p-6">
         {renderTabContent()}
       </div>

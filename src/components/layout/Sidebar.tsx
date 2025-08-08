@@ -1,5 +1,6 @@
 import React from 'react';
 import { Home, Calendar, BookOpen, Settings } from 'lucide-react';
+import { Link } from 'react-router';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -9,9 +10,9 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, currentView, onViewChange }) => {
   const menuItems = [
-    { id: 'home', icon: Home, label: 'Classes', active: currentView === 'home' },
-    { id: 'calendar', icon: Calendar, label: 'Calendar', active: currentView === 'calendar' },
-    { id: 'assignments', icon: BookOpen, label: 'To Review', active: currentView === 'assignments' },
+    { id: 'home', icon: Home, label: 'Classes', active: currentView === 'home', link: "/" },
+    { id: 'calendar', icon: Calendar, label: 'Calendar', active: currentView === 'calendar', link: "/" },
+    { id: 'assignments', icon: BookOpen, label: 'To Review', active: currentView === 'assignments', link: "/" },
   ];
 
   return (
@@ -21,16 +22,16 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, currentView, onViewChange }) 
       </div>
       <nav className="p-2">
         {menuItems.map((item) => (
-          <button
+          <Link
+            to={item.link}
             key={item.id}
             onClick={() => onViewChange(item.id)}
-            className={`w-full flex items-center px-3 py-3 rounded-lg text-left hover:bg-gray-100 transition-colors ${
-              item.active ? 'bg-blue-50 text-blue-600 border-r-3 border-blue-600' : 'text-gray-700'
-            }`}
+            className={`w-full flex items-center px-3 py-3 rounded-lg text-left hover:bg-gray-100 transition-colors ${item.active ? 'bg-blue-50 text-blue-600 border-r-3 border-blue-600' : 'text-gray-700'
+              }`}
           >
             <item.icon className="w-5 h-5 mr-3" />
             {item.label}
-          </button>
+          </Link>
         ))}
       </nav>
       <div className="absolute bottom-4 left-4 right-4">

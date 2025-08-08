@@ -1,19 +1,21 @@
 import React from 'react';
 import { ArrowLeft } from 'lucide-react';
 import type { ClassData } from './ClassCard';
+import { Link } from 'react-router';
+import { getRandomDarkColor } from '@/lib/utils';
 
 interface ClassHeaderProps {
   classData: ClassData;
   activeTab: string;
-  onBack: () => void;
+  // onBack: () => void;
   onTabChange: (tab: string) => void;
 }
 
-const ClassHeader: React.FC<ClassHeaderProps> = ({ 
-  classData, 
-  activeTab, 
-  onBack, 
-  onTabChange 
+const ClassHeader: React.FC<ClassHeaderProps> = ({
+  classData,
+  activeTab,
+  // onBack, 
+  onTabChange
 }) => {
   const tabs = [
     { id: 'stream', label: 'Stream' },
@@ -23,15 +25,16 @@ const ClassHeader: React.FC<ClassHeaderProps> = ({
   ];
 
   return (
-    <div className={`${classData.color} text-white`}>
+    <div className={` text-white`} style={{ background: getRandomDarkColor() }}>
       <div className="p-6">
         <div className="flex items-center mb-4">
-          <button 
-            onClick={onBack}
+          <Link
+            to={"/"}
+            // onClick={onBack}
             className="p-2 hover:bg-white hover:bg-opacity-20 rounded-full mr-4"
           >
             <ArrowLeft className="w-6 h-6" />
-          </button>
+          </Link>
           <div>
             <h1 className="text-2xl font-bold">{classData.name}</h1>
             <p className="opacity-90">{classData.teacher}</p>
@@ -39,10 +42,10 @@ const ClassHeader: React.FC<ClassHeaderProps> = ({
         </div>
         <div className="flex items-center text-sm opacity-90">
           <span className="mr-6">Class code: {classData.code}</span>
-          <span>{classData.students} students</span>
+
         </div>
       </div>
-      
+
       {/* Navigation Tabs */}
       <div className="border-t border-white border-opacity-20">
         <div className="flex">
@@ -50,11 +53,10 @@ const ClassHeader: React.FC<ClassHeaderProps> = ({
             <button
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
-              className={`px-6 py-3 font-medium transition-colors relative ${
-                activeTab === tab.id 
-                  ? 'text-white' 
+              className={`px-6 py-3 font-medium transition-colors relative ${activeTab === tab.id
+                  ? 'text-white'
                   : 'text-white text-opacity-70 hover:text-white hover:text-opacity-90'
-              }`}
+                }`}
             >
               {tab.label}
               {activeTab === tab.id && (

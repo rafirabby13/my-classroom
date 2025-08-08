@@ -1,106 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Menu, Calendar, BookOpen } from 'lucide-react';
 import Sidebar from './Sidebar';
 // import ClassList from './ClassList';
 // import ClassInterface from './ClassInterface';
 // import { ClassData } from './ClassCard';
-// import { PostData } from './PostCard';
+// import { PostData } from './PostCard'; 
 import type { ClassData } from '../classroom/ClassCard';
-import type { PostData } from '../posts/PostCard';
 import ClassInterface from '../classroom/ClassInterface';
 import ClassList from '../classroom/ClassList';
 import { Button } from '../ui/button';
+import { Outlet } from 'react-router';
 
-// Mock data - replace with your actual data
-const mockClasses: ClassData[] = [
-  {
-    id: 1,
-    name: "Mathematics 101",
-    teacher: "Dr. Sarah Johnson",
-    description: "Basic mathematics course covering algebra, geometry, and calculus fundamentals",
-    code: "MATH101",
-    students: 4,
-    color: "bg-blue-500"
-  },
-  {
-    id: 2,
-    name: "Computer Science Fundamentals",
-    teacher: "Prof. Mike Chen",
-    description: "Introduction to programming concepts, algorithms, and data structures",
-    code: "CS101",
-    students: 4,
-    color: "bg-green-500"
-  },
-  {
-    id: 3,
-    name: "English Literature",
-    teacher: "Ms. Emily Davis",
-    description: "Exploring classic and contemporary literature from around the world",
-    code: "ENG201",
-    students: 4,
-    color: "bg-red-500"
-  },
-  {
-    id: 4,
-    name: "Physics Laboratory",
-    teacher: "Dr. Robert Wilson",
-    description: "Hands-on physics experiments covering mechanics, thermodynamics, and electromagnetism",
-    code: "PHY301",
-    students: 4,
-    color: "bg-orange-500"
-  },
-  {
-    id: 5,
-    name: "World History",
-    teacher: "Prof. Lisa Anderson",
-    description: "Comprehensive study of world civilizations from ancient times to modern era",
-    code: "HIST101",
-    students: 4,
-    color: "bg-purple-500"
-  },
-  {
-    id: 6,
-    name: "Chemistry Basics",
-    teacher: "Dr. James Brown",
-    description: "Introduction to chemical principles, reactions, and laboratory techniques",
-    code: "CHEM101",
-    students: 4,
-    color: "bg-orange-600"
-  }
-];
 
-const mockPosts: PostData[] = [
-  {
-    id: 1,
-    type: "assignment",
-    title: "Weekly Assignment #3",
-    description: "Complete exercises 1-15 from Chapter 5",
-    dueDate: "Due Tomorrow",
-    author: "Dr. Sarah Johnson",
-    timestamp: "2 hours ago"
-  },
-  {
-    id: 2,
-    type: "material",
-    title: "Lecture Notes - Quadratic Equations",
-    description: "Today's lecture materials and additional resources",
-    author: "Dr. Sarah Johnson",
-    timestamp: "1 day ago"
-  },
-  {
-    id: 3,
-    type: "announcement",
-    title: "Mid-term Exam Schedule",
-    description: "The mid-term examination will be held on Friday, March 15th at 2:00 PM in Room 204.",
-    author: "Dr. Sarah Johnson",
-    timestamp: "3 days ago"
-  }
-];
+
+
 
 const MainLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentView, setCurrentView] = useState('home');
   const [selectedClass, setSelectedClass] = useState<ClassData | null>(null);
+  const [classes, setClasses] = useState([]);
 
   const handleClassClick = (classData: ClassData) => {
     setSelectedClass(classData);
@@ -125,16 +44,34 @@ const MainLayout: React.FC = () => {
     // Add your create class logic here
   };
 
+  useEffect(() => {
+    fetch("http://localhost:5000/all-classes")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch classes");
+        }
+        return res.json();
+      })
+      .then((data) => {
+
+        setClasses(data);
+      })
+      .catch((err) => {
+        console.error("Error fetching classes:", err);
+      });
+  }, []);
+
+
+
   // If a class is selected, show the class interface
-  if (selectedClass) {
-    return (
-      <ClassInterface
-        classData={selectedClass}
-        posts={mockPosts}
-        onBack={handleBackToClasses}
-      />
-    );
-  }
+  // if (selectedClass) {
+  //   return (
+  //     <ClassInterface
+  //       classData={selectedClass}
+  //       onBack={handleBackToClasses}
+  //     />
+  //   );
+  // }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -165,7 +102,7 @@ const MainLayout: React.FC = () => {
                 <Menu className="w-6 h-6" />
               </button>
               <div className='md:flex items-center gap-2 hidden'>
-                <img className='h-7 w-7' src="/public/logo.png" alt="" />
+                <img className='h-7 w-7' src="/logo.png" alt="" />
                 <h1 className="text-2xl font-semibold text-gray-900">My Classroom</h1>
               </div>
             </div>
@@ -188,12 +125,11 @@ const MainLayout: React.FC = () => {
 
         {/* Content Area */}
         <main className="p-6">
-          {currentView === 'home' && (
-            <ClassList
-              classes={mockClasses}
-              onClassClick={handleClassClick}
-            />
-          )}
+
+          {/* <ClassList
+            classes={classes}
+          /> */}
+          <Outlet />
 
           {currentView === 'calendar' && (
             <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">

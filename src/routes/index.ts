@@ -2,10 +2,24 @@ import { createBrowserRouter } from "react-router";
 
 import React from "react";
 import MainLayout from "@/components/layout/MainLayout";
+import ClassInterface from "@/components/classroom/ClassInterface";
+import ClassList from "@/components/classroom/ClassList";
 
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: React.createElement(MainLayout)
+        element: React.createElement(MainLayout),
+        children: [
+            {
+                path: "/",
+                element: React.createElement(ClassList),
+                loader: ()=> fetch("http://localhost:5000/all-classes")
+            },
+            {
+                path: "class/:id",
+                element: React.createElement(ClassInterface),
+                loader: ({ params }) => fetch(`http://localhost:5000/class/${params.id}`)
+            }
+        ]
     }
 ])
