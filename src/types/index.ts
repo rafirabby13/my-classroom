@@ -3,7 +3,6 @@ export interface User {
   email: string;
   name: string;
   avatar?: string;
-  role: 'student' | 'teacher';
 }
 
 export interface ClassRoom {

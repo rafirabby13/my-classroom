@@ -10,6 +10,8 @@ import ClassInterface from '../classroom/ClassInterface';
 import ClassList from '../classroom/ClassList';
 import { Button } from '../ui/button';
 import { Outlet } from 'react-router';
+import { Dialog, DialogTrigger } from '../ui/dialog';
+import AddClass from '../classroom/AddClass';
 
 
 
@@ -40,6 +42,8 @@ const MainLayout: React.FC = () => {
   };
 
   const handleCreateClass = () => {
+
+    // const 
     console.log('Create class clicked');
     // Add your create class logic here
   };
@@ -113,12 +117,7 @@ const MainLayout: React.FC = () => {
               >
                 Join Class
               </Button>
-              <Button
-                onClick={handleCreateClass}
-                className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-gray-700"
-              >
-                Create Class
-              </Button>
+              <AddClass/>
             </div>
           </div>
         </header>

@@ -54,8 +54,8 @@ const ClassHeader: React.FC<ClassHeaderProps> = ({
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
               className={`px-6 py-3 font-medium transition-colors relative ${activeTab === tab.id
-                  ? 'text-white'
-                  : 'text-white text-opacity-70 hover:text-white hover:text-opacity-90'
+                ? 'text-white'
+                : 'text-white text-opacity-70 hover:text-white hover:text-opacity-90'
                 }`}
             >
               {tab.label}
