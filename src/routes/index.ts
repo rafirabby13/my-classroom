@@ -14,13 +14,13 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: "/",
-                element: React.createElement(ClassList),
-                loader: () => fetch("http://localhost:5000/all-classes")
+                element: React.createElement(ClassList)
+                // loader: ({params}) => fetch(`import.meta.env.VITE_BACKEND_URL/all-classes?email=${params.email}`)
             },
             {
                 path: "class/:id",
                 element: React.createElement(ClassInterface),
-                loader: ({ params }) => fetch(`http://localhost:5000/class/${params.id}`)
+                loader: ({ params }) => fetch(`${import.meta.env.VITE_BACKEND_URL}/class/${params.id}`)
             }
         ]
     },

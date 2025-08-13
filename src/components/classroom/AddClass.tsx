@@ -15,42 +15,48 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import axios, { type AxiosResponse } from 'axios';
 import type { ClassData } from "./ClassCard";
 import { useState } from "react";
+import { getRandomDarkColor } from "@/lib/utils";
 
 const AddClass: React.FC = () => {
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const [dialogOpen, setDialogOpen] = useState<boolean>(false);
-    
+
     // Type the form with ClassData interface
     const form = useForm<ClassData>({
         defaultValues: {
             name: "",
             teacher: "",
             description: "",
-            code: ""
+            code: "",
+            students: []
         }
     });
 
     const onSubmit: SubmitHandler<ClassData> = async (values: ClassData): Promise<void> => {
         try {
             setIsSubmitting(true);
-            
-            const res: AxiosResponse<any> = await axios.post("http://localhost:5000/create-class", values);
-            
+
+            const joinCode = getRandomDarkColor().slice(1, 7)
+            console.log(joinCode)
+            const data = { ...values, joinCode }
+
+            const res: AxiosResponse<any> = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/create-class`, data);
+
             if (res.data) {
                 console.log(res.data);
-                
+
                 // Reset form after successful submission
                 form.reset();
-                
+
                 // Close dialog
                 setDialogOpen(false);
-                
+
                 // You could add success toast here
                 // toast.success("Class created successfully!");
             }
         } catch (error) {
             console.error("Error creating class:", error);
-            
+
             // You could add error toast here
             // toast.error("Failed to create class");
         } finally {
@@ -89,9 +95,9 @@ const AddClass: React.FC = () => {
                                             <FormItem>
                                                 <FormLabel>Class Title</FormLabel>
                                                 <FormControl>
-                                                    <Input 
-                                                        placeholder="Enter class title" 
-                                                        {...field} 
+                                                    <Input
+                                                        placeholder="Enter class title"
+                                                        {...field}
                                                         disabled={isSubmitting}
                                                     />
                                                 </FormControl>
@@ -115,9 +121,9 @@ const AddClass: React.FC = () => {
                                             <FormItem>
                                                 <FormLabel>Teacher Name</FormLabel>
                                                 <FormControl>
-                                                    <Input 
-                                                        placeholder="Enter teacher name" 
-                                                        {...field} 
+                                                    <Input
+                                                        placeholder="Enter teacher name"
+                                                        {...field}
                                                         disabled={isSubmitting}
                                                     />
                                                 </FormControl>
@@ -141,9 +147,9 @@ const AddClass: React.FC = () => {
                                             <FormItem>
                                                 <FormLabel>Description</FormLabel>
                                                 <FormControl>
-                                                    <Input 
-                                                        placeholder="Enter class description" 
-                                                        {...field} 
+                                                    <Input
+                                                        placeholder="Enter class description"
+                                                        {...field}
                                                         disabled={isSubmitting}
                                                     />
                                                 </FormControl>
@@ -167,9 +173,9 @@ const AddClass: React.FC = () => {
                                             <FormItem>
                                                 <FormLabel>Course Code</FormLabel>
                                                 <FormControl>
-                                                    <Input 
-                                                        placeholder="e.g., CS101" 
-                                                        {...field} 
+                                                    <Input
+                                                        placeholder="e.g., CS101"
+                                                        {...field}
                                                         disabled={isSubmitting}
                                                         style={{ textTransform: 'uppercase' }}
                                                     />
@@ -183,16 +189,16 @@ const AddClass: React.FC = () => {
 
                             <DialogFooter>
                                 <DialogClose asChild>
-                                    <Button 
-                                        variant="outline" 
+                                    <Button
+                                        variant="outline"
                                         type="button"
                                         disabled={isSubmitting}
                                     >
                                         Cancel
                                     </Button>
                                 </DialogClose>
-                                <Button 
-                                    type="submit" 
+                                <Button
+                                    type="submit"
                                     disabled={isSubmitting}
                                 >
                                     {isSubmitting ? "Creating..." : "Create Class"}

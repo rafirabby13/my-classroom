@@ -1,16 +1,50 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ClassCard, { type ClassData } from './ClassCard';
-import { Link, useLoaderData } from 'react-router';
+import { Link } from 'react-router';
+import useAuthContext from '@/hooks/useAuthContext';
+import { useGetAllClasses } from '@/hooks/useGetAllClasses';
 
 
 
-const ClassList: React.FC= () => {
+const ClassList: React.FC = () => {
+  const context = useAuthContext()
+  if (!context) {
+    throw new Error("error")
+  }
+  const { user } = context
+  if (!user) {
+    return
+  }
+  let email;
+  if (user.email) {
+    email = user.email
+  }
 
-  const classes = useLoaderData()
+
+  const { data: classes, isPending, error } = useGetAllClasses({ email })
+  if (isPending) return 'Loading...'
+
+  if (error) return 'An error has occurred: ' + error.message
+
+  // if (isPending) {
+  //   return "kjxcbvkjsdc"
+  // }
+  console.log(classes)
+
+
+  // useEffect(()=>{
+  //   fetch(`import.meta.env.VITE_BACKEND_URL/all-classes?email=${user?.email}`)
+  //   .then(res=> res.json())
+  //   .then(data=>{
+  //     setClasses(data)
+
+  //   })
+  // },[])
+
 
   const handleclass = (c: ClassData) => {
 
-    fetch(`http://localhost:5000/class/${c._id}`)
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/class/${c._id}`)
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch classes");

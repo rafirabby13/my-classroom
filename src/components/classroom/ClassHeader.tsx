@@ -1,8 +1,8 @@
 import React from 'react';
 import { ArrowLeft } from 'lucide-react';
-import type { ClassData } from './ClassCard';
 import { Link } from 'react-router';
 import { getRandomDarkColor } from '@/lib/utils';
+import type { ClassData } from '@/types';
 
 interface ClassHeaderProps {
   classData: ClassData;
@@ -20,10 +20,9 @@ const ClassHeader: React.FC<ClassHeaderProps> = ({
   const tabs = [
     { id: 'stream', label: 'Stream' },
     { id: 'classwork', label: 'Classwork' },
-    { id: 'people', label: 'People' },
-    { id: 'grades', label: 'Grades' }
+    { id: 'feedBack', label: 'FeedBack' }
   ];
-
+// console.log(classData)
   return (
     <div className={` text-white`} style={{ background: getRandomDarkColor() }}>
       <div className="p-6">
@@ -42,6 +41,7 @@ const ClassHeader: React.FC<ClassHeaderProps> = ({
         </div>
         <div className="flex items-center text-sm opacity-90">
           <span className="mr-6">Class code: {classData.code}</span>
+          <span className="mr-6 font-bold">Join Class code: {classData.joinCode}</span>
 
         </div>
       </div>

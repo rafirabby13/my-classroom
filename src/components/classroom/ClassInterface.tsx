@@ -1,54 +1,33 @@
 import { useState } from 'react';
-import StreamTab from '../posts/StreamTab';
+import StreamTab from '../tabs/StreamTab';
 import ClassworkTab from '../tabs/ClassworkTab';
-import PeopleTab from '../tabs/PeopleTab';
-import GradesTab from '../tabs/GradesTab';
 import { useLoaderData } from 'react-router';
 import ClassHeader from './ClassHeader';
+import type { ClassData } from '@/types';
 
 
 
 const ClassInterface = () => {
   const [activeTab, setActiveTab] = useState('stream');
-  const classData = useLoaderData();
-  const handleCreateAssignment = () => {
-    console.log('Create assignment clicked');
-    // Add your create assignment logic here
-  };
+  const classData = useLoaderData() as ClassData;
 
-  const handleCreateMaterial = () => {
-    console.log('Create material clicked');
-    // Add your create material logic here
-  };
 
-  const handleCreateAnnouncement = () => {
-    console.log('Create announcement clicked');
-    // Add your create announcement logic here
-  };
-
-  const handlePostMenuClick = (postId: number) => {
-    console.log('Post menu clicked:', postId);
-    // Add your post menu logic here
-  };
 
   const renderTabContent = () => {
     switch (activeTab) {
       case 'stream':
         return (
           <StreamTab
-            // posts={posts}
-            onCreateAssignment={handleCreateAssignment}
-            onCreateMaterial={handleCreateMaterial}
-            onCreateAnnouncement={handleCreateAnnouncement}
-            onPostMenuClick={handlePostMenuClick}
+          classData={classData}
+            // // posts={posts}
+            // onCreateAssignment={handleCreateAssignment}
+            // onCreateMaterial={handleCreateMaterial}
+            // onCreateAnnouncement={handleCreateAnnouncement}
+            // onPostMenuClick={handlePostMenuClick}
           />
         );
       case 'classwork':
-        return <ClassworkTab onCreateAssignment={handleCreateAssignment} />;
-      case 'people':
-        return <PeopleTab classData={classData} />;
-      case 'grades':
-        return <GradesTab onCreateAssignment={handleCreateAssignment} />;
+        return <ClassworkTab classData={classData}/>
       default:
         return null;
     }
@@ -60,6 +39,7 @@ const ClassInterface = () => {
         classData={classData}
         activeTab={activeTab}
         // onBack={onBack}
+    
         onTabChange={setActiveTab}
       />
 

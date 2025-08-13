@@ -1,17 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import { Menu, Calendar, BookOpen } from 'lucide-react';
 import Sidebar from './Sidebar';
-// import ClassList from './ClassList';
-// import ClassInterface from './ClassInterface';
-// import { ClassData } from './ClassCard';
-// import { PostData } from './PostCard'; 
-import type { ClassData } from '../classroom/ClassCard';
-import ClassInterface from '../classroom/ClassInterface';
-import ClassList from '../classroom/ClassList';
 import { Button } from '../ui/button';
 import { Outlet } from 'react-router';
-import { Dialog, DialogTrigger } from '../ui/dialog';
 import AddClass from '../classroom/AddClass';
+import useAuthContext from '@/hooks/useAuthContext';
+import JoinClassModal from '../common/JoinClassModal';
 
 
 
@@ -20,50 +14,24 @@ import AddClass from '../classroom/AddClass';
 const MainLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentView, setCurrentView] = useState('home');
-  const [selectedClass, setSelectedClass] = useState<ClassData | null>(null);
-  const [classes, setClasses] = useState([]);
+  // const [selectedClass, setSelectedClass] = useState<ClassData | null>(null);
+  // const [classes, setClasses] = useState([]);
 
-  const handleClassClick = (classData: ClassData) => {
-    setSelectedClass(classData);
-  };
+  const context = useAuthContext()
+  if (!context) {
+    throw new Error("error")
+  }
+  const { user } = context
+  console.log(user)
 
-  const handleBackToClasses = () => {
-    setSelectedClass(null);
-  };
-
+ 
   const handleViewChange = (view: string) => {
     setCurrentView(view);
-    setSelectedClass(null);
+    // setSelectedClass(null);
   };
 
-  const handleJoinClass = () => {
-    console.log('Join class clicked');
-    // Add your join class logic here
-  };
 
-  const handleCreateClass = () => {
 
-    // const 
-    console.log('Create class clicked');
-    // Add your create class logic here
-  };
-
-  useEffect(() => {
-    fetch("http://localhost:5000/all-classes")
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Failed to fetch classes");
-        }
-        return res.json();
-      })
-      .then((data) => {
-
-        setClasses(data);
-      })
-      .catch((err) => {
-        console.error("Error fetching classes:", err);
-      });
-  }, []);
 
 
 
@@ -111,13 +79,11 @@ const MainLayout: React.FC = () => {
               </div>
             </div>
             <div className="flex space-x-3">
-              <Button
-                onClick={handleJoinClass}
-                className="bg-amber-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700"
-              >
-                Join Class
-              </Button>
-              <AddClass/>
+              <JoinClassModal/>
+              <AddClass />
+              {
+                user && <Button className='w-fit ' variant={'outline'}><img className='h-6 rounded-full w-full' src={user?.photoURL || undefined} alt="" /></Button>
+              }
             </div>
           </div>
         </header>

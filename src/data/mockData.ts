@@ -1,6 +1,6 @@
 // data/mockData.ts
 
-import type { ClassData, PostData, StudentData } from "@/types";
+import type {  PostData, StudentData } from "@/types";
 
 // export const mockClasses: ClassData[] =
 

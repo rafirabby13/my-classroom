@@ -1,6 +1,6 @@
 import { AuthContext, type AuthContextType } from "@/providers/AuthProviders";
 import { useContext } from "react";
-import { useNavigate, useLocation } from "react-router";
+import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import a1 from "../assets/Animation - 1735202464545.json";
 import Lottie from "lottie-react";
@@ -18,7 +18,7 @@ const Login: React.FC = () => {
 
     const { googleLogin, setUser }: AuthContextType = context;
     const navigate = useNavigate();
-    const location = useLocation();
+    // const location = useLocation();
 
     const handleGoogleLogin = (): void => {
         googleLogin()
@@ -42,12 +42,12 @@ const Login: React.FC = () => {
                     avatar: res?.user?.photoURL || undefined
                 };
 
-                const response = await axios.post("http://localhost:5000/create-user", userData)
+                const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/create-user`, userData)
 
                 if (response) {
                     console.log(response.data)
                 }
-                navigate(location?.state ? location.state as string : "/");
+                navigate("/");
             })
             .catch((err: Error) => {
                 Swal.fire({

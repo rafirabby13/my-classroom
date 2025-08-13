@@ -1,22 +1,16 @@
 import { getRandomDarkColor } from '@/lib/utils';
+import type { ClassData } from '@/types';
 import React from 'react';
 
-export interface ClassData {
-  _id?: string,
 
-  name: string;
-  teacher: string;
-  description: string;
-  code: string;
-}
 
 interface ClassCardProps {
   classData: ClassData
 }
 
 
-const ClassCard: React.FC<ClassCardProps> = ({ classData, }) => {
-  // console.log(classData)
+const ClassCard: React.FC<ClassCardProps> = ({ classData }) => {
+  console.log(classData)
   return (
     <div
       className="rounded-lg p-4 text-white bg-gray-600 cursor-pointer hover:opacity-90 transition-opacity flex flex-col"

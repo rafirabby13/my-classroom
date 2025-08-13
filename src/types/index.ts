@@ -41,13 +41,14 @@ export interface Comment {
 // types/index.ts
 
 export interface ClassData {
-  id: number;
+  _id?: string,
+
   name: string;
   teacher: string;
   description: string;
   code: string;
-  students: number;
-  color: string;
+  students?: string[],
+  joinCode: string
 }
 
 export interface PostData {
@@ -83,4 +84,11 @@ export interface SubmissionData {
   submittedAt: string;
   grade?: number;
   feedback?: string;
+}
+
+export interface Assignment {
+  _id: string;
+  title: string;
+  description: string;
+  dueDate: string;
 }
