@@ -59,15 +59,9 @@ const MainLayout: React.FC = () => {
 
 
 
-  // If a class is selected, show the class interface
-  // if (selectedClass) {
-  //   return (
-  //     <ClassInterface
-  //       classData={selectedClass}
-  //       onBack={handleBackToClasses}
-  //     />
-  //   );
-  // }
+  const handleClick = () => {
+    setIsOpen(false)
+  };
   const handleLogout = () => {
     Swal.fire({
       title: "Are you sure?",
@@ -130,10 +124,10 @@ const MainLayout: React.FC = () => {
               </div>
             </div>
             <div className="flex space-x-3">
-              {
+              {/* {
                 location.pathname == "/" &&
                 <div className="relative inline-block" ref={dropdownRef}>
-                  {/* Trigger Button */}
+                 
                   <Button
                     onClick={() => setIsOpen(!isOpen)}
                     aria-label="Class actions"
@@ -145,10 +139,10 @@ const MainLayout: React.FC = () => {
                     />
                   </Button>
 
-                  {/* Dropdown Menu */}
+                 
                   {isOpen && (
                     <div className="absolute top-full right-0 mt-2  bg-white border border-gray-200 rounded-lg shadow-lg z-50 overflow-hidden">
-                      <div className='flex flex-col items-center gap-2 p-2 w-full'>
+                      <div className='flex flex-col items-center gap-2 p-2 w-full' onClick={handleClick}>
                         <JoinClassModal />
                         <AddClass />
                       </div>
@@ -157,7 +151,13 @@ const MainLayout: React.FC = () => {
                     </div>
                   )}
                 </div>
-              }
+              } */}
+              {location.pathname === "/" && (
+                <div className="flex gap-2">
+                  <JoinClassModal />
+                  <AddClass />
+                </div>
+              )}
               {
                 user && <div className='flex items-center gap-2'>
                   <Button className='w-fit ' variant={'outline'}><img className='h-6 rounded-full w-full' src={user?.photoURL || undefined} alt="" /></Button>

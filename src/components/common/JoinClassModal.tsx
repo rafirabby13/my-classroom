@@ -75,7 +75,7 @@ const JoinClassModal = () => {
         <div>
             <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                 <DialogTrigger asChild >
-                    <Button variant={"outline"} className=" w-full">Join Class</Button>
+                    <Button variant={"outline"} >Join Class</Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>

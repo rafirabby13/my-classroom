@@ -82,7 +82,7 @@ const AddClass: React.FC = () => {
         <div>
             <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                 <DialogTrigger asChild>
-                    <Button variant="outline" className="w-full">Create Class</Button>
+                    <Button variant="outline" >Create Class</Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>
