@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { Menu, Calendar, BookOpen } from 'lucide-react';
 import Sidebar from './Sidebar';
 import { Button } from '../ui/button';
-import { Outlet, useLocation, useNavigate } from 'react-router';
+import { Outlet, useLocation } from 'react-router';
 import AddClass from '../classroom/AddClass';
 import useAuthContext from '@/hooks/useAuthContext';
 import JoinClassModal from '../common/JoinClassModal';
-import Chatbot from '../chatbot/chatbot';
 import Swal from 'sweetalert2';
 import Chatbott from '../chatbot/Chatbott';
 
@@ -19,7 +18,6 @@ const MainLayout: React.FC = () => {
   const [currentView, setCurrentView] = useState('home');
   // const [selectedClass, setSelectedClass] = useState<ClassData | null>(null);
   // const [classes, setClasses] = useState([]);
-  const navigate = useNavigate()
 
   const context = useAuthContext()
   if (!context) {

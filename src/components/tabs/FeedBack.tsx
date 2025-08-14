@@ -1,7 +1,7 @@
 import type { ClassData } from "@/types";
 
 
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import { MessageSquare, Star } from 'lucide-react';
 import { categories, feedbackTypes } from "@/data/mockData";
 import { useForm } from "react-hook-form";
@@ -53,7 +53,7 @@ const formSchema = z.object({
 
 const FeedBack = ({ classData }: FeedbackSystemProps) => {
     const [activeTab, setActiveTab] = useState<'submit' | 'view'>('submit');
-    const [rating, setRating] = useState<number>(5);
+    const [, setRating] = useState<number>(5);
     // const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
     const form = useForm<FeedbackFormValues>({
         resolver: zodResolver(formSchema),

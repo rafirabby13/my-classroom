@@ -283,7 +283,7 @@ const Chatbott = () => {
             </div>
             <div>
               <h3 className="font-semibold">Amit's Classroom Assistant</h3>
-              <p className="text-xs text-blue-100">Powered by FAQ Knowledge Base</p>
+              <p className="text-xs text-blue-100">Powered by Learn Easy</p>
             </div>
           </div>
           <div className="flex gap-2">

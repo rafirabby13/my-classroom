@@ -17,8 +17,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, currentView, onViewChange }) 
 
   return (
     <div className={`fixed left-0 top-0 h-full bg-white border-r border-gray-200 transition-transform duration-300 z-20 ${isOpen ? 'translate-x-0' : '-translate-x-full'} w-64`}>
-      <div className="p-4 border-b border-gray-200">
-        <h2 className="text-xl font-semibold text-gray-800">Classroom</h2>
+      <div className="p-4 py-6
+       border-b border-gray-200 flex items-center gap-3">
+        <img className='h-4 w-4' src="/logo.png" alt="" />
+                <h1 className="text-xl font-semibold text-gray-900">Learn Easy</h1>
       </div>
       <nav className="p-2">
         {menuItems.map((item) => (
