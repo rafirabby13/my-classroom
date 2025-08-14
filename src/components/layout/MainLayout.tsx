@@ -8,6 +8,7 @@ import useAuthContext from '@/hooks/useAuthContext';
 import JoinClassModal from '../common/JoinClassModal';
 import Chatbot from '../chatbot/chatbot';
 import Swal from 'sweetalert2';
+import Chatbott from '../chatbot/Chatbott';
 
 
 
@@ -159,7 +160,7 @@ const MainLayout: React.FC = () => {
             classes={classes}
           /> */}
           <Outlet />
-          <Chatbot />
+          <Chatbott />
 
           {currentView === 'calendar' && (
             <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
