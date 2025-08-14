@@ -6,6 +6,7 @@ import { Outlet } from 'react-router';
 import AddClass from '../classroom/AddClass';
 import useAuthContext from '@/hooks/useAuthContext';
 import JoinClassModal from '../common/JoinClassModal';
+import Chatbot from '../chatbot/chatbot';
 
 
 
@@ -95,6 +96,7 @@ const MainLayout: React.FC = () => {
             classes={classes}
           /> */}
           <Outlet />
+          <Chatbot/>
 
           {currentView === 'calendar' && (
             <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
