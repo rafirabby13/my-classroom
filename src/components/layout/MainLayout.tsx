@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Menu, Calendar, BookOpen, Plus } from 'lucide-react';
+import React, { useState } from 'react';
+import { Menu, Calendar, BookOpen } from 'lucide-react';
 import Sidebar from './Sidebar';
 import { Button } from '../ui/button';
 import { Outlet, useLocation } from 'react-router';
@@ -24,23 +24,9 @@ const MainLayout: React.FC = () => {
     throw new Error("error")
   }
   const { user, logoutUser } = context
-  console.log(user)
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  // console.log(user)
 
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+ 
 
   // Optional: only show on specific conditions
 
@@ -55,13 +41,11 @@ const MainLayout: React.FC = () => {
 
 
   const location = useLocation()
-  console.log(location)
+  // console.log(location)
 
 
 
-  const handleClick = () => {
-    setIsOpen(false)
-  };
+  
   const handleLogout = () => {
     Swal.fire({
       title: "Are you sure?",
@@ -120,7 +104,7 @@ const MainLayout: React.FC = () => {
               </button>
               <div className='md:flex items-center gap-2 hidden'>
                 <img className='h-7 w-7' src="/logo.png" alt="" />
-                <h1 className="text-2xl font-semibold text-gray-900">My Classroom</h1>
+                <h1 className="text-2xl font-semibold text-gray-900">Learn Easy</h1>
               </div>
             </div>
             <div className="flex space-x-3">

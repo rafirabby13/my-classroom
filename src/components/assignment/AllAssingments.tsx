@@ -9,7 +9,7 @@ interface ClassworkTabProps {
     classData: ClassData;
 }
 const AllAssingments = ({ classData }: ClassworkTabProps) => {
-    console.log(classData)
+    // console.log(classData)
     const classId = classData._id as string
     const { data, isPending } = useGetAllAssignments(classId)
     if (isPending) {

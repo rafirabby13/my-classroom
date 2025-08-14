@@ -20,7 +20,7 @@ const ClassHeader: React.FC<ClassHeaderProps> = ({
   const tabs = [
     { id: 'stream', label: 'Stream' },
     { id: 'classwork', label: 'Classwork' },
-    { id: 'feedBack', label: 'FeedBack' }
+    { id: 'feedback', label: 'FeedBack' }
   ];
 // console.log(classData)
   return (

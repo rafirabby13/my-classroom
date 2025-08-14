@@ -175,3 +175,17 @@ export   const faqData = {
       }
     }
   };
+
+  export  const feedbackTypes = [
+    { value: 'suggestion', label: 'Suggestion', icon: '💡', color: 'bg-blue-100 text-blue-700' },
+    { value: 'compliment', label: 'Compliment', icon: '👏', color: 'bg-green-100 text-green-700' },
+    { value: 'complaint', label: 'Issue', icon: '⚠️', color: 'bg-red-100 text-red-700' },
+    { value: 'question', label: 'Question', icon: '❓', color: 'bg-purple-100 text-purple-700' }
+  ];
+
+  export const categories = [
+    { value: 'teaching', label: 'Teaching Method' },
+    { value: 'content', label: 'Course Content' },
+    { value: 'assignments', label: 'Assignments' },
+    { value: 'general', label: 'General' }
+  ];

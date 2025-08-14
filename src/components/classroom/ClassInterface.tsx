@@ -4,6 +4,7 @@ import ClassworkTab from '../tabs/ClassworkTab';
 import { useLoaderData } from 'react-router';
 import ClassHeader from './ClassHeader';
 import type { ClassData } from '@/types';
+import FeedBack from '../tabs/FeedBack';
 
 
 
@@ -28,6 +29,8 @@ const ClassInterface = () => {
         );
       case 'classwork':
         return <ClassworkTab classData={classData}/>
+      case 'feedback':
+        return <FeedBack classData={classData}/>
       default:
         return null;
     }

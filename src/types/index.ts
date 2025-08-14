@@ -92,3 +92,12 @@ export interface Assignment {
   description: string;
   dueDate: string;
 }
+
+export 
+type FeedbackFormValues = {
+  type: string;
+  category: string;
+  rating: number;
+  message: string;
+};
+

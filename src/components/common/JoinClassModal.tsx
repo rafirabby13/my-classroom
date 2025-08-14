@@ -15,6 +15,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useState } from "react";
 import useAuthContext from "@/hooks/useAuthContext";
 import axios, { type AxiosResponse } from "axios";
+import { queryClient } from "@/main";
+import Swal from "sweetalert2";
 
 
 interface JoinClass {
@@ -46,19 +48,30 @@ const JoinClassModal = () => {
                 joinCode: values.joinCode,
                 email: user?.email
             }
-            console.log(data)
+            console.log(`${import.meta.env.VITE_BACKEND_URL}/join-class`)
 
-            const res: AxiosResponse<any> = await axios.post("import.meta.env.VITE_BACKEND_URL/join-class", data);
+            const res: AxiosResponse<any> = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/join-class`, data);
+            console.log(res)
 
             if (res.data) {
                 console.log(res.data);
 
                 // Reset form after successful submission
                 form.reset();
+                const email = user?.email
+                queryClient.invalidateQueries({
+                    queryKey: ['classes', email]
+                })
 
                 // Close dialog
                 setDialogOpen(false);
-
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Your have successfully joined the class",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
                 // You could add success toast here
                 // toast.success("Class created successfully!");
             }
