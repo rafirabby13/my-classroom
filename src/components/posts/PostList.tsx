@@ -1,12 +1,23 @@
 import React from 'react';
-import { PostItem } from './PostItem';
-import type { Post } from '../../types';
+import { useGetAllPOst } from '@/hooks/useGetAllPost';
+import type { ClassData } from '@/types';
+import PostCard from './PostCard';
 
 interface PostListProps {
-  posts: Post[];
+  classData: ClassData
 }
+interface MessageData {
+  classId: string;
+  message: string;
+  time: string; // ISO 8601 timestamp
+  _id: string;
+}
+export const PostList: React.FC<PostListProps> = ({classData}: PostListProps) => {
 
-export const PostList: React.FC<PostListProps> = ({ posts }) => {
+  const classId = classData._id
+
+  const {data: posts} = useGetAllPOst({classId})
+  console.log(posts)
   if (posts.length === 0) {
     return (
       <div className="text-center py-12">
@@ -17,8 +28,8 @@ export const PostList: React.FC<PostListProps> = ({ posts }) => {
 
   return (
     <div className="space-y-4">
-      {posts.map(post => (
-        <PostItem key={post.id} post={post} />
+      {posts?.map((post: MessageData) => (
+        <PostCard  post={post} />
       ))}
     </div>
   );
