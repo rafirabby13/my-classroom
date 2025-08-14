@@ -17,6 +17,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useState } from "react";
 import type { ClassData } from "@/types";
+import { queryClient } from "@/main";
 
 interface AssignmentFormInputs {
   title: string;
@@ -50,6 +51,10 @@ const classId = classData._id  as string
 
       if (res.data.insertedId) {
         setOpen(false);
+        await queryClient.invalidateQueries({
+          queryKey: ['assignments', classId]
+
+        })
         Swal.fire({
           icon: "success",
           title: "Assignment is created"

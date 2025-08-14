@@ -13,14 +13,23 @@ import { Input } from "../ui/input";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import axios, { type AxiosResponse } from 'axios';
-import type { ClassData } from "./ClassCard";
 import { useState } from "react";
 import { getRandomDarkColor } from "@/lib/utils";
+import type { ClassData } from "@/types";
+import useAuthContext from "@/hooks/useAuthContext";
+import { queryClient } from "@/main";
 
 const AddClass: React.FC = () => {
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
+
+    const context = useAuthContext()
+    if (!context || !context.user) {
+        return "error"
+    }
+    const { user } = context
+    // console.log(user)
     // Type the form with ClassData interface
     const form = useForm<ClassData>({
         defaultValues: {
@@ -37,13 +46,18 @@ const AddClass: React.FC = () => {
             setIsSubmitting(true);
 
             const joinCode = getRandomDarkColor().slice(1, 7)
-            console.log(joinCode)
+            // console.log(joinCode)
+            const email = user?.email as string
             const data = { ...values, joinCode }
-
+            data.students?.push(email)
+            // console.log(data)
             const res: AxiosResponse<any> = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/create-class`, data);
 
             if (res.data) {
-                console.log(res.data);
+                // console.log(res.data);
+                await queryClient.invalidateQueries({
+                    queryKey: ['classes', email]
+                });
 
                 // Reset form after successful submission
                 form.reset();
@@ -68,7 +82,7 @@ const AddClass: React.FC = () => {
         <div>
             <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                 <DialogTrigger asChild>
-                    <Button variant="outline">Create Class</Button>
+                    <Button variant="outline" className="w-full">Create Class</Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>
@@ -164,10 +178,6 @@ const AddClass: React.FC = () => {
                                         name="code"
                                         rules={{
                                             required: "Course code is required",
-                                            pattern: {
-                                                value: /^[A-Z0-9]{4,8}$/,
-                                                message: "Course code should be 4-8 uppercase letters/numbers"
-                                            }
                                         }}
                                         render={({ field }) => (
                                             <FormItem>
@@ -200,6 +210,7 @@ const AddClass: React.FC = () => {
                                 <Button
                                     type="submit"
                                     disabled={isSubmitting}
+                                    className="bg-orange-600"
                                 >
                                     {isSubmitting ? "Creating..." : "Create Class"}
                                 </Button>

@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import ClassCard, { type ClassData } from './ClassCard';
+
 import { Link } from 'react-router';
 import useAuthContext from '@/hooks/useAuthContext';
 import { useGetAllClasses } from '@/hooks/useGetAllClasses';
+import type React from 'react';
+import type { ClassData } from '@/types';
+import ClassCard from './ClassCard';
+import { useEffect } from 'react';
 
 
 
@@ -21,7 +24,7 @@ const ClassList: React.FC = () => {
   }
 
 
-  const { data: classes, isPending, error } = useGetAllClasses({ email })
+  const { data: classes, isPending, error, refetch } = useGetAllClasses({ email })
   if (isPending) return 'Loading...'
 
   if (error) return 'An error has occurred: ' + error.message
@@ -29,17 +32,13 @@ const ClassList: React.FC = () => {
   // if (isPending) {
   //   return "kjxcbvkjsdc"
   // }
-  console.log(classes)
+
+  // console.log(classes)
 
 
-  // useEffect(()=>{
-  //   fetch(`import.meta.env.VITE_BACKEND_URL/all-classes?email=${user?.email}`)
-  //   .then(res=> res.json())
-  //   .then(data=>{
-  //     setClasses(data)
-
-  //   })
-  // },[])
+  useEffect(() => {
+    refetch()
+  }, [classes])
 
 
   const handleclass = (c: ClassData) => {

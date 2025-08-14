@@ -1,12 +1,13 @@
-import React, {  useState } from 'react';
-import { Menu, Calendar, BookOpen } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Menu, Calendar, BookOpen, Plus } from 'lucide-react';
 import Sidebar from './Sidebar';
 import { Button } from '../ui/button';
-import { Outlet } from 'react-router';
+import { Outlet, useLocation } from 'react-router';
 import AddClass from '../classroom/AddClass';
 import useAuthContext from '@/hooks/useAuthContext';
 import JoinClassModal from '../common/JoinClassModal';
 import Chatbot from '../chatbot/chatbot';
+import Swal from 'sweetalert2';
 
 
 
@@ -22,17 +23,39 @@ const MainLayout: React.FC = () => {
   if (!context) {
     throw new Error("error")
   }
-  const { user } = context
+  const { user, logoutUser } = context
   console.log(user)
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
- 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  // Optional: only show on specific conditions
+
+
+
+
+
   const handleViewChange = (view: string) => {
     setCurrentView(view);
     // setSelectedClass(null);
   };
 
 
-
+  const location = useLocation()
+  console.log(location)
 
 
 
@@ -45,6 +68,33 @@ const MainLayout: React.FC = () => {
   //     />
   //   );
   // }
+  const handleLogout = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Logged out!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        logoutUser()
+          .then(() => {
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Logged out successfully",
+              showConfirmButton: false,
+              timer: 1500
+            });
+          }).then(err => {
+            console.log(err)
+          })
+      }
+    });
+
+
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -80,10 +130,39 @@ const MainLayout: React.FC = () => {
               </div>
             </div>
             <div className="flex space-x-3">
-              <JoinClassModal/>
-              <AddClass />
               {
-                user && <Button className='w-fit ' variant={'outline'}><img className='h-6 rounded-full w-full' src={user?.photoURL || undefined} alt="" /></Button>
+                location.pathname == "/" &&
+                <div className="relative inline-block" ref={dropdownRef}>
+                  {/* Trigger Button */}
+                  <Button
+                    onClick={() => setIsOpen(!isOpen)}
+                    aria-label="Class actions"
+                    className='bg-white border border-orange-600 text-orange-600 hover:bg-gray-100 hover:border-none cursor-pointer'
+                  >
+                    <Plus
+                      className={`w-6 h-6 text-gray-600 transition-transform duration-200 ${isOpen ? 'rotate-45' : 'rotate-0'
+                        }`}
+                    />
+                  </Button>
+
+                  {/* Dropdown Menu */}
+                  {isOpen && (
+                    <div className="absolute top-full right-0 mt-2  bg-white border border-gray-200 rounded-lg shadow-lg z-50 overflow-hidden">
+                      <div className='flex flex-col items-center gap-2 p-2 w-full'>
+                        <JoinClassModal />
+                        <AddClass />
+                      </div>
+
+
+                    </div>
+                  )}
+                </div>
+              }
+              {
+                user && <div className='flex items-center gap-2'>
+                  <Button className='w-fit ' variant={'outline'}><img className='h-6 rounded-full w-full' src={user?.photoURL || undefined} alt="" /></Button>
+                  <Button className='bg-orange-600' onClick={handleLogout}>Logout</Button>
+                </div>
               }
             </div>
           </div>
@@ -96,7 +175,7 @@ const MainLayout: React.FC = () => {
             classes={classes}
           /> */}
           <Outlet />
-          <Chatbot/>
+          <Chatbot />
 
           {currentView === 'calendar' && (
             <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">

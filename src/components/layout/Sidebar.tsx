@@ -11,8 +11,8 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, currentView, onViewChange }) => {
   const menuItems = [
     { id: 'home', icon: Home, label: 'Classes', active: currentView === 'home', link: "/" },
-    { id: 'calendar', icon: Calendar, label: 'Calendar', active: currentView === 'calendar', link: "/" },
-    { id: 'assignments', icon: BookOpen, label: 'To Review', active: currentView === 'assignments', link: "/" },
+    { id: 'calendar', icon: Calendar, label: 'Calendar', active: currentView === 'calendar', link: "/calender" },
+    { id: 'review', icon: BookOpen, label: 'To Review', active: currentView === 'review', link: "/review" },
   ];
 
   return (

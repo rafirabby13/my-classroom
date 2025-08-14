@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 export const useGetAllAssignments = (classId: string) => {
-  const { isPending, error, data } = useQuery({
+  const { isPending, error, data, refetch } = useQuery({
     // queryKey: ['assignments'],
     queryKey: ['assignments', classId],
     queryFn: async () => {
@@ -14,6 +14,6 @@ export const useGetAllAssignments = (classId: string) => {
 
   })
 
-  return { data, isPending, error }
+  return { data, isPending, error, refetch }
 
 }

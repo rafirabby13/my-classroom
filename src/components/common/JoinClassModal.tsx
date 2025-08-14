@@ -74,8 +74,8 @@ const JoinClassModal = () => {
     return (
         <div>
             <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-                <DialogTrigger asChild>
-                    <Button className="bg-orange-600">Join Class</Button>
+                <DialogTrigger asChild >
+                    <Button variant={"outline"} className=" w-full">Join Class</Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>
@@ -129,6 +129,7 @@ const JoinClassModal = () => {
                                 <Button
                                     type="submit"
                                     disabled={isSubmitting}
+                                    className="bg-orange-600"
                                 >
                                     {isSubmitting ? "Joining..." : "Join Class"}
                                 </Button>

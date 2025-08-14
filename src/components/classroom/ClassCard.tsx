@@ -10,7 +10,7 @@ interface ClassCardProps {
 
 
 const ClassCard: React.FC<ClassCardProps> = ({ classData }) => {
-  console.log(classData)
+  // console.log(classData)
   return (
     <div
       className="rounded-lg p-4 text-white bg-gray-600 cursor-pointer hover:opacity-90 transition-opacity flex flex-col"
