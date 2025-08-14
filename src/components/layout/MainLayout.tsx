@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Menu, Calendar, BookOpen } from 'lucide-react';
 import Sidebar from './Sidebar';
 import { Button } from '../ui/button';
-import { Outlet, useLocation } from 'react-router';
+import { Outlet, useLocation, useNavigate } from 'react-router';
 import AddClass from '../classroom/AddClass';
 import useAuthContext from '@/hooks/useAuthContext';
 import JoinClassModal from '../common/JoinClassModal';
@@ -19,6 +19,7 @@ const MainLayout: React.FC = () => {
   const [currentView, setCurrentView] = useState('home');
   // const [selectedClass, setSelectedClass] = useState<ClassData | null>(null);
   // const [classes, setClasses] = useState([]);
+  const navigate = useNavigate()
 
   const context = useAuthContext()
   if (!context) {
@@ -139,6 +140,7 @@ const MainLayout: React.FC = () => {
               } */}
               {location.pathname === "/" && (
                 <div className="flex gap-2">
+                  <Button variant={'link'} className='cursor-pointer' onClick={()=>window.location.href="https://flow-with-gamification.netlify.app/"}>Take a Test</Button>
                   <JoinClassModal />
                   <AddClass />
                 </div>
